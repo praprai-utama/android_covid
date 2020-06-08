@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         login_button.setOnClickListener {
-            var username = username_edittext.text.toString()
-            var password = password_edittext.text.toString()
+            val username = username_edittext.text.toString()
+            val password = password_edittext.text.toString()
 
             Toast.makeText(applicationContext, username + password , Toast.LENGTH_SHORT).show()
         }

@@ -22,7 +22,6 @@ fun main() {
     var tmpD: Float = 4.5f // Default double. float by f or F
     var tmpE: Double = 1.5
 
-
     // Immutable - read only variable (final), runtime
     val tmp6 = 1_000_000
     // tmp6 = 1_000
