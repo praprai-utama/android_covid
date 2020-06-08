@@ -9,18 +9,18 @@
     tools:context=".MainActivity">
 
     <ScrollView
-        android:clipToPadding="false"
-        android:paddingBottom="120dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="120dp">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="50dp"
-            android:paddingRight="20dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:paddingRight="20dp">
 
             <ImageView
                 android:layout_width="120dp"
@@ -35,16 +35,19 @@
                 android:layout_marginTop="28dp"
                 android:background="@drawable/edittext_background"
                 android:hint="username"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:textColor="#ffff" />
 
             <EditText
+                android:inputType="textPassword"
                 android:id="@+id/password_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/edittext_background"
                 android:hint="password"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:textColor="#ffff" />
 
             <Button
                 android:id="@+id/login_button"
@@ -121,7 +124,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>
