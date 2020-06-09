@@ -65,7 +65,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="forgot password"
-                android:textAllCaps="false"
                 android:textColor="#B2FFFFFF" />
 
             <LinearLayout
