@@ -41,22 +41,26 @@ class StockFragment : Fragment() {
     }
 
     // primary class
-    inner class CustomStockListAdapter(private var productList: List<String>) : RecyclerView.Adapter<CustomStockListAdapter.ViewHolder>() {
+    inner class CustomStockListAdapter(private var productList: List<String>) :
+        RecyclerView.Adapter<CustomStockListAdapter.ViewHolder>() {
 
         // primary class
-        inner class ViewHolder(view: View, val binding: CustomStockListBinding) : RecyclerView.ViewHolder(view){
+        inner class ViewHolder(view: View, val binding: CustomStockListBinding) :
+            RecyclerView.ViewHolder(view) {
 
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val binding = CustomStockListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                CustomStockListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(binding.root, binding)
         }
 
         override fun getItemCount() = productList.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+            val binding = holder.binding
+            binding.productNameTextview.text = "iBlurBlur"
         }
 
     }
