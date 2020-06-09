@@ -9,6 +9,8 @@
         android:id="@+id/stock_recyclerview"
         android:layout_width="match_parent"
         tools:listitem="@layout/custom_stock_list"
+        tools:spanCount="2"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:layout_height="match_parent"/>
 
 </FrameLayout>
