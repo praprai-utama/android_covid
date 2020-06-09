@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.codemobiles.myapp.GridSpacingItemDecoration
+import com.codemobiles.myapp.R
 import com.codemobiles.myapp.databinding.CustomStockListBinding
 import com.codemobiles.myapp.databinding.FragmentStockBinding
 
@@ -32,7 +35,6 @@ class StockFragment : Fragment() {
 
         // optional
         binding.stockRecyclerview.addItemDecoration(GridSpacingItemDecoration(2, 20, true))
-
 
         // recommended
         binding.stockRecyclerview.setHasFixedSize(true)
@@ -61,6 +63,12 @@ class StockFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val binding = holder.binding
             binding.productNameTextview.text = "iBlurBlur"
+
+            Glide.with(binding.productImageview.context)
+                .applyDefaultRequestOptions(RequestOptions().centerCrop())
+                .load("https://mpics.mgronline.com/pics/Images/562000011970903.JPEG")
+                .error(R.drawable.logo)
+                .into(binding.productImageview)
         }
 
     }
