@@ -1,5 +1,10 @@
 package com.codemobiles.myapp.services
 
+import com.codemobiles.myapp.API_PRODUCT
+import com.codemobiles.myapp.models.Demo
+import retrofit2.Call
+import retrofit2.http.GET
+
 
 interface APIService {
 //    @GET(API_PRODUCT)
@@ -13,4 +18,8 @@ interface APIService {
 //
 //    @DELETE("$API_PRODUCT/{$API_PRODUCT_PARAMS_ID}")
 //    fun deleteProduct(@Path(API_PRODUCT_PARAMS_ID) id: Int): Call<Any>
+
+
+    @GET(API_PRODUCT)
+    fun demo(): Call<Demo>
 }
