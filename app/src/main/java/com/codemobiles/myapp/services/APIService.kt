@@ -2,6 +2,7 @@ package com.codemobiles.myapp.services
 
 import com.codemobiles.myapp.API_PRODUCT
 import com.codemobiles.myapp.models.Demo
+import com.codemobiles.myapp.models.ProductResponse
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -22,4 +23,7 @@ interface APIService {
 
     @GET(API_PRODUCT)
     fun demo(): Call<Demo>
+
+    @GET(API_PRODUCT)
+    fun getProducts(): Call<ProductResponse>
 }

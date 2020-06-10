@@ -1,6 +1,7 @@
 package com.codemobiles.myapp.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,12 @@ import com.codemobiles.myapp.GridSpacingItemDecoration
 import com.codemobiles.myapp.R
 import com.codemobiles.myapp.databinding.CustomStockListBinding
 import com.codemobiles.myapp.databinding.FragmentStockBinding
+import com.codemobiles.myapp.models.ProductResponse
+import com.codemobiles.myapp.services.APIClient
+import com.codemobiles.myapp.services.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class StockFragment : Fragment() {
@@ -39,7 +46,30 @@ class StockFragment : Fragment() {
         // recommended
         binding.stockRecyclerview.setHasFixedSize(true)
 
+        feedNetwork()
+
         return binding.root
+    }
+
+    private fun feedNetwork() {
+        val call: Call<ProductResponse> = APIClient.getClient().create(APIService::class.java).getProducts()
+
+        Log.d("cm_network", call.request().url().toString())
+
+        // object expression
+        call.enqueue(object : Callback<ProductResponse> {
+            override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                Log.e("cm_network", t.message)
+            }
+
+            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
+               if(response.isSuccessful){
+                   Log.d("cm_network", response.body().toString())
+               }else{
+                   Log.d("cm_network", "nok")
+               }
+            }
+        })
     }
 
     // primary class

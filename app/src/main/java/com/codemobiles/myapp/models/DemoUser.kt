@@ -1,6 +1,5 @@
 package com.codemobiles.myapp.models
 
-
 class Demo : ArrayList<DemoItem>()
 
 data class DemoItem(
