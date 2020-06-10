@@ -33,18 +33,25 @@ class StockFragment : Fragment() {
     ): View? {
         binding = FragmentStockBinding.inflate(layoutInflater)
 
-        customAdapter = CustomStockListAdapter(listOf("123", "21412", "12412", "124124"))
+        customAdapter = CustomStockListAdapter(null)
 
-        binding.stockRecyclerview.adapter = customAdapter
+        binding.stockRecyclerview.apply {
+            adapter = customAdapter
+            layoutManager = GridLayoutManager(context, 2)
+            addItemDecoration(GridSpacingItemDecoration(2, 20, true))
+            setHasFixedSize(true)
+        }
 
-        // important!!!!!!!!
-        binding.stockRecyclerview.layoutManager = GridLayoutManager(context, 2)
-
-        // optional
-        binding.stockRecyclerview.addItemDecoration(GridSpacingItemDecoration(2, 20, true))
-
-        // recommended
-        binding.stockRecyclerview.setHasFixedSize(true)
+//        binding.stockRecyclerview.adapter = customAdapter
+//
+//        // important!!!!!!!!
+//        binding.stockRecyclerview.layoutManager = GridLayoutManager(context, 2)
+//
+//        // optional
+//        binding.stockRecyclerview.addItemDecoration(GridSpacingItemDecoration(2, 20, true))
+//
+//        // recommended
+//        binding.stockRecyclerview.setHasFixedSize(true)
 
         feedNetwork()
 
@@ -52,7 +59,8 @@ class StockFragment : Fragment() {
     }
 
     private fun feedNetwork() {
-        val call: Call<ProductResponse> = APIClient.getClient().create(APIService::class.java).getProducts()
+        val call: Call<ProductResponse> =
+            APIClient.getClient().create(APIService::class.java).getProducts()
 
         Log.d("cm_network", call.request().url().toString())
 
@@ -62,18 +70,30 @@ class StockFragment : Fragment() {
                 Log.e("cm_network", t.message)
             }
 
-            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
-               if(response.isSuccessful){
-                   Log.d("cm_network", response.body().toString())
-               }else{
-                   Log.d("cm_network", "nok")
-               }
+            override fun onResponse(
+                call: Call<ProductResponse>,
+                response: Response<ProductResponse>
+            ) {
+                if (response.isSuccessful) {
+//                    customAdapter.productList = response.body()
+////                    // important !!!
+////                    customAdapter.notifyDataSetChanged()
+                    customAdapter.apply {
+                        // this
+                        productList = response.body()
+                    }.run {
+                        // important !!!
+                        notifyDataSetChanged()
+                    }
+                } else {
+                    Log.d("cm_network", "nok")
+                }
             }
         })
     }
 
     // primary class
-    inner class CustomStockListAdapter(private var productList: List<String>) :
+    inner class CustomStockListAdapter(var productList: ProductResponse?) :
         RecyclerView.Adapter<CustomStockListAdapter.ViewHolder>() {
 
         // primary class
@@ -88,17 +108,26 @@ class StockFragment : Fragment() {
             return ViewHolder(binding.root, binding)
         }
 
-        override fun getItemCount() = productList.size
+        override fun getItemCount() = if (productList == null) 0 else productList!!.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val binding = holder.binding
-            binding.productNameTextview.text = "iBlurBlur"
+            productList?.let { products ->
+                // scope function (kotlin)
+                val product = products[position]
 
-            Glide.with(binding.productImageview.context)
-                .applyDefaultRequestOptions(RequestOptions().centerCrop())
-                .load("https://mpics.mgronline.com/pics/Images/562000011970903.JPEG")
-                .error(R.drawable.logo)
-                .into(binding.productImageview)
+                val binding = holder.binding
+                binding.productNameTextview.text = product.name
+                binding.productPriceTextview.text = "$ " + product.price.toString()
+                binding.productStockTextview.text = product.stock.toString() + " price"
+
+                binding.productDetailTextview.text = "CodeMobiles Workshop"
+
+                Glide.with(binding.productImageview.context)
+                    .applyDefaultRequestOptions(RequestOptions().centerCrop())
+                    .load(APIClient.getImageURL() + product.image)
+                    .error(R.drawable.logo)
+                    .into(binding.productImageview)
+            }
         }
 
     }
