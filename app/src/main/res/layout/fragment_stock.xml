@@ -6,6 +6,11 @@
     android:background="#C5C3C3"
     tools:context=".ui.main.StockFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stock_recyclerview"
         android:layout_width="match_parent"
@@ -13,5 +18,7 @@
         tools:spanCount="2"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:layout_height="match_parent"/>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

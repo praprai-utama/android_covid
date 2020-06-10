@@ -42,6 +42,11 @@ class StockFragment : Fragment() {
             setHasFixedSize(true)
         }
 
+        binding.refresh.setOnRefreshListener {
+            feedNetwork()
+        }
+
+
 //        binding.stockRecyclerview.adapter = customAdapter
 //
 //        // important!!!!!!!!
@@ -67,13 +72,12 @@ class StockFragment : Fragment() {
         // object expression
         call.enqueue(object : Callback<ProductResponse> {
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                binding.refresh.isRefreshing = false
+
                 Log.e("cm_network", t.message)
             }
 
-            override fun onResponse(
-                call: Call<ProductResponse>,
-                response: Response<ProductResponse>
-            ) {
+            override fun onResponse( call: Call<ProductResponse>,response: Response<ProductResponse> ) {
                 if (response.isSuccessful) {
 //                    customAdapter.productList = response.body()
 ////                    // important !!!
@@ -88,6 +92,8 @@ class StockFragment : Fragment() {
                 } else {
                     Log.d("cm_network", "nok")
                 }
+
+                binding.refresh.isRefreshing = false
             }
         })
     }
