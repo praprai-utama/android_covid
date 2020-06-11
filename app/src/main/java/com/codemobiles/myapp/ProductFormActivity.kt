@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.codemobiles.myapp.databinding.ActivityProductFormBinding
@@ -84,6 +86,15 @@ class ProductFormActivity : AppCompatActivity() {
             })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return true
+    }
+
+
     private fun onPhotosReturned(returnedPhotos: Array<MediaFile>) {
         val imagesFiles: List<MediaFile> = ArrayList(listOf(*returnedPhotos))
         file = imagesFiles[0].file
@@ -151,26 +162,25 @@ class ProductFormActivity : AppCompatActivity() {
         // object expression
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-
+                Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
+                binding.productSubmit.isEnabled = true
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
-
+                if(response.isSuccessful){
+                    finish()
+                }else{
+                    Toast.makeText(applicationContext, "upload failure", Toast.LENGTH_SHORT).show()
+                }
+                binding.productSubmit.isEnabled = true
             }
         })
-
-
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        binding.toolbar.setOnClickListener {
-            finish()
-        }
     }
 
     private fun checkRuntimePermission() {
