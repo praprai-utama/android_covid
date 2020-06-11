@@ -3,8 +3,11 @@ package com.codemobiles.myapp.services
 import com.codemobiles.myapp.API_PRODUCT
 import com.codemobiles.myapp.models.Demo
 import com.codemobiles.myapp.models.ProductResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
+import retrofit2.http.*
 
 
 interface APIService {
@@ -26,4 +29,11 @@ interface APIService {
 
     @GET(API_PRODUCT)
     fun getProducts(): Call<ProductResponse>
+
+    @Multipart
+    @POST(API_PRODUCT)
+    fun addProduct(
+        @PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part image: MultipartBody.Part?
+    ): Call<ResponseBody>
 }
