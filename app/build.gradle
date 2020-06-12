@@ -57,6 +57,8 @@ dependencies {
 
     implementation 'com.karumi:dexter:6.2.0'
 
+    implementation 'info.hoang8f:android-segmented:1.0.6'
+
 }
 
 // Begin Camera
@@ -68,3 +70,18 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 // End Camera
+
+
+
+
+// MPAndroidChart - Chart library for Android --- Begin
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+}
+// MPAndroidChart - chart library for Android --- End
+
+
